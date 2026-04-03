@@ -77,7 +77,7 @@ my %connect_info = (
     password => $password,
 );
 
-$connect_info{tls} = 'connect' if $tls;
+$irc->enable_ssl if $tls;
 
 $irc->connect(
     $config->{server},
