@@ -53,6 +53,24 @@ $irc->reg_cb(
 
         my $expression = substr($text, length($trigger));
         $expression =~ s/^\s+|\s+$//g;
+
+        if (lc($expression) eq 'over and die') {
+            my $nick = (split /!/, $ircmsg->{prefix}, 2)[0] // 'someone';
+            my @dog = (
+                ' (___)',
+                ' (o o)',
+                '/  V  \\',
+                '\\  ^  /',
+                ' |||||',
+            );
+
+            $irc->send_chan($channel, 'PRIVMSG', $channel, "$nick:");
+            for my $line (@dog) {
+                $irc->send_chan($channel, 'PRIVMSG', $channel, $line);
+            }
+            return;
+        }
+
         $expression = '1d20' if $expression eq '';
 
         my $result = evaluate_roll($expression, {
