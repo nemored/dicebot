@@ -25,6 +25,7 @@ my $max_dice      = defined $config->{max_dice}      ? $config->{max_dice}      
 my $max_sides     = defined $config->{max_sides}     ? $config->{max_sides}     : 1000;
 my $max_abs_bonus = defined $config->{max_abs_bonus} ? $config->{max_abs_bonus} : 1000;
 my $password      = $config->{password};
+my $tls           = $config->{tls} ? 1 : 0;
 
 my $irc = AnyEvent::IRC::Client->new;
 my $cv  = AnyEvent->condvar;
@@ -69,15 +70,19 @@ $irc->reg_cb(
     },
 );
 
+my %connect_info = (
+    nick     => $config->{nick},
+    user     => $config->{username} // $config->{nick},
+    real     => $config->{realname} // 'Perl Dice Bot',
+    password => $password,
+);
+
+$connect_info{tls} = 'connect' if $tls;
+
 $irc->connect(
     $config->{server},
     $config->{port},
-    {
-        nick     => $config->{nick},
-        user     => $config->{username} // $config->{nick},
-        real     => $config->{realname} // 'Perl Dice Bot',
-        password => $password,
-    }
+    \%connect_info,
 );
 
 $cv->recv;

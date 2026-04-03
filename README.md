@@ -26,6 +26,7 @@ Required keys:
 
 Optional keys:
 
+- `tls` (default: disabled; set to `1` to enable TLS)
 - `username`
 - `realname`
 - `password`
@@ -33,6 +34,8 @@ Optional keys:
 - `max_dice` (default: 20)
 - `max_sides` (default: 1000)
 - `max_abs_bonus` (default: 1000)
+
+When TLS is enabled, use a TLS IRC port (commonly `6697`).
 
 ## Run
 

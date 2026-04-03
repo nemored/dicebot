@@ -1,6 +1,7 @@
 {
     server        => 'irc.libera.chat',
-    port          => 6667,
+    port          => 6697,
+    tls           => 1,
     nick          => 'dicebot',
     username      => 'dicebot',
     realname      => 'Perl IRC Dice Bot',
